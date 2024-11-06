@@ -1,0 +1,7 @@
+#hBox {
+border: 1px solid #000;
+-fx-border-color: #000;
+-fx-border-width: 1;
+-fx-border-style: solid;
+-fx-padding: 10;
+}
