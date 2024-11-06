@@ -1,6 +1,7 @@
 package ru.andy.sudocu;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -11,8 +12,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.geometry.Pos; 
+import javafx.scene.text.Text; 
 
 public class PrimaryController {
 
@@ -23,6 +23,7 @@ public class PrimaryController {
 
   private static int SUDOKU_ITEMS_COUNT = 9; 
   private int[][] sudoku_items = new int[SUDOKU_ITEMS_COUNT][SUDOKU_ITEMS_COUNT];
+  private int [][] sudoku_random_items = new int[SUDOKU_ITEMS_COUNT][SUDOKU_ITEMS_COUNT];
 
   @FXML
   private void calculateSudoku() {
@@ -35,8 +36,22 @@ public class PrimaryController {
         }
       }
     }
+    randomizeSudokuItems();
     // displayArray(sudoku_items);
     displaySudoku();
+  }
+
+  private void randomizeSudokuItems() {
+    sudoku_random_items[0] = sudoku_items[3];
+    sudoku_random_items[1] = sudoku_items[2];
+    sudoku_random_items[2] = sudoku_items[4];
+    sudoku_random_items[3] = sudoku_items[1];
+    sudoku_random_items[4] = sudoku_items[5];
+    sudoku_random_items[5] = sudoku_items[8];
+    sudoku_random_items[6] = sudoku_items[7];
+    sudoku_random_items[7] = sudoku_items[6];
+    sudoku_random_items[8] = sudoku_items[0];
+    displayArray(sudoku_random_items);
   }
 
   // Utility method to display the 2D array
