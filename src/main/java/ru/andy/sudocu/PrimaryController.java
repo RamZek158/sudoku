@@ -1,5 +1,7 @@
 package ru.andy.sudocu;
 
+import java.util.Random;
+
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -24,7 +26,8 @@ public class PrimaryController {
 
   private static int SUDOKU_ITEMS_COUNT = 9; 
   private int[][] sudoku_items = new int[SUDOKU_ITEMS_COUNT][SUDOKU_ITEMS_COUNT];
-  private int [][] sudoku_random_items = new int[SUDOKU_ITEMS_COUNT][SUDOKU_ITEMS_COUNT];
+  private int[][] sudoku_random_items = new int[SUDOKU_ITEMS_COUNT][SUDOKU_ITEMS_COUNT];
+  private int[][] sudoku_items_with_empty = new int[SUDOKU_ITEMS_COUNT][SUDOKU_ITEMS_COUNT];
 
   @FXML
   private void calculateSudoku() {
@@ -52,7 +55,28 @@ public class PrimaryController {
     sudoku_random_items[6] = sudoku_items[8];
     sudoku_random_items[7] = sudoku_items[7];
     sudoku_random_items[8] = sudoku_items[6];
-    displayArray(sudoku_random_items);
+    //displayArray(sudoku_random_items);
+    createSudokuItemsWithEmpty();
+  }
+
+  private void createSudokuItemsWithEmpty() {
+    int emptyItems = 0;
+    int maxEmptyItems = 45;
+
+    for (int i = 0; i < sudoku_random_items.length; i++ ) {
+      int randomEmptyItemsCount = new Random().nextInt((6 - 3) + 1) + 3;
+      for(int j = 0; j < sudoku_random_items[0].length; j++ ) {
+        int randomEmptyItem = new Random().nextInt(2);
+        if (emptyItems <= maxEmptyItems && randomEmptyItem == 1 && randomEmptyItemsCount > 0){
+          sudoku_items_with_empty[i][j] = 0;
+          randomEmptyItemsCount --;
+          emptyItems++;
+        } else {
+          sudoku_items_with_empty[i][j] = sudoku_random_items[i][j];
+        }
+      }
+    }
+    //displayArray(sudoku_items_with_empty);
   }
 
   // Utility method to display the 2D array
@@ -141,7 +165,7 @@ public class PrimaryController {
 
     for (int i = i0; i < i1; i++ ) {
       for(int j = 0; j < SUDOKU_ITEMS_COUNT; j++ ) {
-        sudokuGrid.add(getSudocuItem(sudoku_random_items[i][j], bgColor), columnIndex, rowIndex);
+        sudokuGrid.add(getSudocuItem(sudoku_items_with_empty[i][j], bgColor), columnIndex, rowIndex);
         columnIndex++;
         if(j == 2  || j == 5){
           columnIndex = initialColumnIndex;
@@ -153,7 +177,11 @@ public class PrimaryController {
 
 
   private StackPane getSudocuItem(int sudokuValue, Color bgColor) {
-    Text sudokuItemTextValue = new Text(Integer.toString(sudokuValue));
+    String text = "";
+    if(sudokuValue > 0) {
+      text  = Integer.toString(sudokuValue);
+    }
+    Text sudokuItemTextValue = new Text(text);
     Font font = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 24);
     sudokuItemTextValue.setFont(font);
 
