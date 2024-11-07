@@ -73,7 +73,7 @@ public class PrimaryController {
   private void drawLayout () {
       hbox = new HBox();
       hbox.setId("hBox");
-      hbox.setPrefSize(200, 500); 
+      hbox.setPrefSize(500, 600); 
       hbox.setAlignment(Pos.TOP_LEFT);
       Button addButton = new Button("START GAME");
 
@@ -93,23 +93,88 @@ public class PrimaryController {
       int rowIndex = 0;
       int columnIndex = 0;
 
-      for (int i = 0; i < 3; i++ ) {
-        for(int j = 0; j < 3; j++ ) {
-          sudokuGrid.add(getSudocuItem(sudoku_items[i][j]), rowIndex, columnIndex);
-          rowIndex++;
+      /*for (int i = 0; i < 1; i++ ) {
+        for(int j = 0; j < SUDOKU_ITEMS_COUNT; j++ ) {
+          sudokuGrid.add(getSudocuItem(sudoku_items[i][j]), columnIndex, rowIndex);
+          columnIndex++;
+          if(j == 2  || j == 5){
+            columnIndex = 0;
+            rowIndex++;
+          }
         }
-      }
+      }*/
+
+      drawSudokuItems(0,1, columnIndex, rowIndex);
+
+      rowIndex = 3;
+      columnIndex = 0;
+
+      drawSudokuItems(1,2, columnIndex, rowIndex);
+      /*for (int i = 1; i < 2; i++ ) {
+        for(int j = 0; j < SUDOKU_ITEMS_COUNT; j++ ) {
+          sudokuGrid.add(getSudocuItem(sudoku_items[i][j]), columnIndex, rowIndex);
+          columnIndex++;
+          if(j == 2  || j == 5){
+            columnIndex = 0;
+            rowIndex++;
+          }
+        }
+      }*/
+
+      rowIndex = 6;
+      columnIndex = 0;
+      drawSudokuItems(2,3, columnIndex, rowIndex);
+      /*for (int i = 2; i < 3; i++ ) {
+        for(int j = 0; j < SUDOKU_ITEMS_COUNT; j++ ) {
+          sudokuGrid.add(getSudocuItem(sudoku_items[i][j]), columnIndex, rowIndex);
+          columnIndex++;
+          if(j == 2  || j == 5){
+            columnIndex = 0;
+            rowIndex++;
+          }
+        }
+      }*/
 
       rowIndex = 0;
-      columnIndex = 1;
-      for (int i = 0; i < 3; i++ ) {
-        for(int j = 3; j < 6; j++ ) {
-          sudokuGrid.add(getSudocuItem(sudoku_items[i][j]), rowIndex, columnIndex);
+      columnIndex = 3;
+      drawSudokuItems(3,4, columnIndex, rowIndex);
+
+      rowIndex = 3;
+      columnIndex = 3;
+      drawSudokuItems(4,5, columnIndex, rowIndex);
+
+      rowIndex = 6;
+      columnIndex = 3;
+      drawSudokuItems(5,6, columnIndex, rowIndex);
+
+      rowIndex = 0;
+      columnIndex = 6;
+      drawSudokuItems(6,7,columnIndex, rowIndex);
+
+      rowIndex = 3;
+      columnIndex = 6;
+      drawSudokuItems(7,8, columnIndex, rowIndex);
+
+      rowIndex = 6;
+      columnIndex = 6;
+      drawSudokuItems(8,9, columnIndex, rowIndex);
+
+      hbox.getChildren().add(sudokuGrid);
+    }
+  }
+
+  private void drawSudokuItems (int i0, int i1, int columnIndex, int rowIndex) {
+    int initialColumnIndex = columnIndex;
+
+    for (int i = i0; i < i1; i++ ) {
+      for(int j = 0; j < SUDOKU_ITEMS_COUNT; j++ ) {
+        sudokuGrid.add(getSudocuItem(sudoku_items[i][j]), columnIndex, rowIndex);
+        columnIndex++;
+        if(j == 2  || j == 5){
+          columnIndex = initialColumnIndex;
           rowIndex++;
         }
       }
-
-      hbox.getChildren().add(sudokuGrid);
     }
   }
 
