@@ -1,3 +1,8 @@
+#sudokuHeader {
+ -fx-font-size: 32px;
+ -fx-fill: #ff5555;
+}
+
 #hBox {
 -fx-border-color: #000;
 -fx-border-width: 1;
