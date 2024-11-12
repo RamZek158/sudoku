@@ -27,11 +27,10 @@ public class PrimaryController {
   private static int SUDOKU_ITEMS_COUNT = 9; 
   private int[][] sudoku_items = new int[SUDOKU_ITEMS_COUNT][SUDOKU_ITEMS_COUNT];
   private int[][] sudoku_random_items = new int[SUDOKU_ITEMS_COUNT][SUDOKU_ITEMS_COUNT];
-  private int[][] sudoku_items_with_empty = new int[SUDOKU_ITEMS_COUNT][SUDOKU_ITEMS_COUNT];
+  private int[][] sudoku_items_with_empty;
 
   @FXML
   private void calculateSudoku() {
-    System.out.println("hello");
     for (int i = 0; i < sudoku_items.length; i++ ) {
       for(int j = 0; j < sudoku_items[0].length; j++ ) {
         sudoku_items[i][j] = i+j+1;
@@ -42,7 +41,6 @@ public class PrimaryController {
     }
     randomizeSudokuItems();
     // displayArray(sudoku_items);
-    displaySudoku();
   }
 
   private void randomizeSudokuItems() {
@@ -63,6 +61,8 @@ public class PrimaryController {
     int emptyItems = 0;
     int maxEmptyItems = 45;
 
+    sudoku_items_with_empty = new int[SUDOKU_ITEMS_COUNT][SUDOKU_ITEMS_COUNT];
+
     for (int i = 0; i < sudoku_random_items.length; i++ ) {
       int randomEmptyItemsCount = new Random().nextInt((6 - 3) + 1) + 3;
       for(int j = 0; j < sudoku_random_items[0].length; j++ ) {
@@ -77,6 +77,8 @@ public class PrimaryController {
       }
     }
     //displayArray(sudoku_items_with_empty);
+    //displaySudoku();
+    drawLayout();
   }
 
   // Utility method to display the 2D array
@@ -87,77 +89,84 @@ public class PrimaryController {
       }
       System.out.println();
     }
+    System.out.println('\n');
   }
 
-  private void displaySudoku () {
-    if(hbox == null){
-      drawLayout ();
-    }
-  }
+  //private void displaySudoku () {
+    //drawLayout();
+  //}
 
   private void drawLayout () {
+    if(hbox == null) {
       hbox = new HBox();
       hbox.setId("hBox");
       hbox.setPrefSize(400, 600); 
       hbox.setAlignment(Pos.TOP_LEFT);
+    }
 
+    if(vbox == null) {
       vbox = new VBox();
       vbox.setId("vBox");
       vbox.setPrefSize(100, 600);
-      Button addButton = new Button("START GAME");
+      Button addButton = new Button("Решить");
       vbox.getChildren().add(addButton);
 
       hbox.getChildren().add(vbox);
       primaryVBox.getChildren().add(hbox);
-      drawSudokuGrid();
+    }
+    drawSudokuGrid();
   }
 
   private void drawSudokuGrid () {
     if(sudokuGrid == null) {
       sudokuGrid = new GridPane();
-      sudokuGrid.setGridLinesVisible(true);
       sudokuGrid.setId("sudokuGrid");
       sudokuGrid.setHgap(1);
       sudokuGrid.setVgap(1);
-
-      int rowIndex = 0;
-      int columnIndex = 0;
-      drawSudokuItems(0,1, columnIndex, rowIndex, Color.AQUA);
-
-      rowIndex = 3;
-      columnIndex = 0;
-      drawSudokuItems(1,2, columnIndex, rowIndex, Color.ORANGE);
-
-      rowIndex = 6;
-      columnIndex = 0;
-      drawSudokuItems(2,3, columnIndex, rowIndex, Color.AQUA);
-
-      rowIndex = 0;
-      columnIndex = 3;
-      drawSudokuItems(3,4, columnIndex, rowIndex, Color.ORANGE);
-
-      rowIndex = 3;
-      columnIndex = 3;
-      drawSudokuItems(4,5, columnIndex, rowIndex, Color.AQUA);
-
-      rowIndex = 6;
-      columnIndex = 3;
-      drawSudokuItems(5,6, columnIndex, rowIndex, Color.ORANGE);
-
-      rowIndex = 0;
-      columnIndex = 6;
-      drawSudokuItems(6,7,columnIndex, rowIndex, Color.AQUA);
-
-      rowIndex = 3;
-      columnIndex = 6;
-      drawSudokuItems(7,8, columnIndex, rowIndex, Color.ORANGE);
-
-      rowIndex = 6;
-      columnIndex = 6;
-      drawSudokuItems(8,9, columnIndex, rowIndex, Color.AQUA);
-
       hbox.getChildren().add(sudokuGrid);
     }
+
+    sudokuGrid.setGridLinesVisible(false);
+    sudokuGrid.getColumnConstraints().clear();
+    sudokuGrid.getRowConstraints().clear();
+    sudokuGrid.getChildren().clear();
+    sudokuGrid.setGridLinesVisible(true);
+      
+    int rowIndex = 0;
+    int columnIndex = 0;
+    drawSudokuItems(0,1, columnIndex, rowIndex, Color.AQUA);
+
+    rowIndex = 3;
+    columnIndex = 0;
+    drawSudokuItems(1,2, columnIndex, rowIndex, Color.ORANGE);
+
+    rowIndex = 6;
+    columnIndex = 0;
+    drawSudokuItems(2,3, columnIndex, rowIndex, Color.AQUA);
+
+    rowIndex = 0;
+    columnIndex = 3;
+    drawSudokuItems(3,4, columnIndex, rowIndex, Color.ORANGE);
+
+    rowIndex = 3;
+    columnIndex = 3;
+    drawSudokuItems(4,5, columnIndex, rowIndex, Color.AQUA);
+
+    rowIndex = 6;
+    columnIndex = 3;
+    drawSudokuItems(5,6, columnIndex, rowIndex, Color.ORANGE);
+
+    rowIndex = 0;
+    columnIndex = 6;
+    drawSudokuItems(6,7,columnIndex, rowIndex, Color.AQUA);
+
+    rowIndex = 3;
+    columnIndex = 6;
+    drawSudokuItems(7,8, columnIndex, rowIndex, Color.ORANGE);
+
+    rowIndex = 6;
+    columnIndex = 6;
+    drawSudokuItems(8,9, columnIndex, rowIndex, Color.AQUA);
   }
 
   private void drawSudokuItems (int i0, int i1, int columnIndex, int rowIndex, Color bgColor) {
@@ -174,7 +183,6 @@ public class PrimaryController {
       }
     }
   }
-
 
   private StackPane getSudocuItem(int sudokuValue, Color bgColor) {
     String text = "";
