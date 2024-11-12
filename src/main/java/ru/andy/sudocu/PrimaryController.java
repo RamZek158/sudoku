@@ -24,6 +24,7 @@ public class PrimaryController {
   private static int SUDOKU_ITEMS_COUNT = 9; 
   private int[][] sudoku_items = new int[SUDOKU_ITEMS_COUNT][SUDOKU_ITEMS_COUNT];
   private int [][] sudoku_random_items = new int[SUDOKU_ITEMS_COUNT][SUDOKU_ITEMS_COUNT];
+  private int [][] sudoku_items_with_empty = new int[SUDOKU_ITEMS_COUNT][SUDOKU_ITEMS_COUNT];
 
   @FXML
   private void calculateSudoku() {
