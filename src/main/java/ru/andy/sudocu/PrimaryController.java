@@ -222,6 +222,15 @@ public class PrimaryController {
       System.out.print(value + " ");
     }
     sudokuFindingItems = new int[sudokuItemsInRow];
+    //fill finded  items
+    getFindedSudokuItems(sudokuItemsInRow, sudokuItems);
+
+  }
+
+  private void getFindedSudokuItems(int findedItemsLength, int[] sudokuItems ) {
+    for(int i = 0; i < sudokuItems.length; i++ ){
+
+    }
 
   }
 
