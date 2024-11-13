@@ -11,7 +11,7 @@
       <HBox alignment="TOP_CENTER">
          <Text fx:id="sudokuHeader" id="sudokuHeader" text="Судоку"/>
       </HBox>
-      <Button fx:id="primaryButton" text="Сгенерировать таблицу" onAction="#calculateSudoku"/>
+      <Button fx:id="primaryButton" id="primaryButton" text="Сгенерировать таблицу судоку" onAction="#calculateSudokuItems"/>
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

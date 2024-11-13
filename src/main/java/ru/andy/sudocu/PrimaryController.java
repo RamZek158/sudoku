@@ -30,7 +30,7 @@ public class PrimaryController {
   private int[][] sudoku_items_with_empty;
 
   @FXML
-  private void calculateSudoku() {
+  private void calculateSudokuItems() {
     for (int i = 0; i < sudoku_items.length; i++ ) {
       for(int j = 0; j < sudoku_items[0].length; j++ ) {
         sudoku_items[i][j] = i+j+1;
@@ -77,24 +77,9 @@ public class PrimaryController {
       }
     }
     //displayArray(sudoku_items_with_empty);
-    //displaySudoku();
     drawLayout();
   }
 
-  // Utility method to display the 2D array
-  private static void displayArray(int[][] array) {
-    for (int[] row : array) {
-      for (int value : row) {
-        System.out.print(value + " ");
-      }
-      System.out.println();
-    }
-    System.out.println('\n');
-  }
-
-  //private void displaySudoku () {
-    //drawLayout();
-  //}
 
   private void drawLayout () {
     if(hbox == null) {
@@ -103,18 +88,22 @@ public class PrimaryController {
       hbox.setPrefSize(400, 600); 
       hbox.setAlignment(Pos.TOP_LEFT);
     }
+    drawSudokuGrid();
 
     if(vbox == null) {
       vbox = new VBox();
       vbox.setId("vBox");
       vbox.setPrefSize(100, 600);
       Button addButton = new Button("Решить");
+      addButton.setId("calculateSudoky");
       vbox.getChildren().add(addButton);
+      addButton.setOnAction(event -> {
+        calculateSudoku();
+    });
 
       hbox.getChildren().add(vbox);
       primaryVBox.getChildren().add(hbox);
     }
-    drawSudokuGrid();
   }
 
   private void drawSudokuGrid () {
@@ -201,5 +190,49 @@ public class PrimaryController {
     StackPane sudokuItem = new StackPane();
     sudokuItem.getChildren().addAll(sudokuItemRectangle, sudokuItemTextValue);
     return sudokuItem;
+  }
+
+  private void calculateSudoku() {
+    int [] sudokuItems = new int[SUDOKU_ITEMS_COUNT];
+    int [] sudokuFindingItems;
+    int sudokuItemsInRow = 9;
+    int sudokuEmptyItemsInRow = 0;
+    int sudokuRowIndex = 0;
+
+    for (int i = 0; i < sudoku_items_with_empty.length; i++ ) {
+      sudokuEmptyItemsInRow = 0;
+      for(int j = 0; j < sudoku_items_with_empty[0].length; j++ ) {
+          if(sudoku_items_with_empty[i][j] == 0){
+            sudokuEmptyItemsInRow ++;
+          }
+      }
+      if(sudokuEmptyItemsInRow < sudokuItemsInRow) {
+        sudokuItemsInRow = sudokuEmptyItemsInRow;
+        sudokuRowIndex = i;
+      }
+      System.out.println("sudokuItemsInRow:" + sudokuItemsInRow);
+      System.out.println("sudokuEmptyItemsInRow:" + sudokuEmptyItemsInRow);
+    }
+    System.out.println("sudokuRowIndex:" + sudokuRowIndex);
+
+    sudokuItems = sudoku_items_with_empty[sudokuRowIndex].clone();
+
+    displayArray(sudoku_items_with_empty);
+    for (int value : sudokuItems) {
+      System.out.print(value + " ");
+    }
+    sudokuFindingItems = new int[sudokuItemsInRow];
+
+  }
+
+   // Utility method to display the 2D array
+   private static void displayArray(int[][] array) {
+    for (int[] row : array) {
+      for (int value : row) {
+        System.out.print(value + " ");
+      }
+      System.out.println();
+    }
+    System.out.println('\n');
   }
 }

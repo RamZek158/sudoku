@@ -3,10 +3,19 @@
  -fx-fill: #ff5555;
 }
 
+#primaryButton, #calculateSudoky {
+-fx-font-size: 16px;  
+}
+
 #hBox {
 -fx-border-color: #000;
 -fx-border-width: 1;
 -fx-border-style: solid;
--fx-padding: 10;
--fx-margin: 10;
+-fx-padding: 10px;
+-fx-margin: 10px;
+}
+
+#vBox {
+-fx-padding: 10px;
+-fx-margin: 10px;
 }
